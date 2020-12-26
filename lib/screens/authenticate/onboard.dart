@@ -1,7 +1,10 @@
-import 'package:dbapp/constants/colors.dart';
+import 'package:dbapp/screens/authenticate/loginUser.dart';
+import 'package:dbapp/screens/authenticate/registerUser.dart';
+import 'package:dbapp/shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dbapp/shared/loading.dart';
-// import 'package:dbapp/screens/authenticate/form2.dart';
+// ignore: unused_import
+import 'package:dbapp/screens/authenticate/registerHospital.dart';
 
 int visibleCard = 1;
 
@@ -10,21 +13,26 @@ String post = '';
 Map<String, dynamic> userMap = {'type': ''};
 
 class RegisterForm1 extends StatefulWidget {
-  //taken from parent props:
-  final Function toggleView;
-  RegisterForm1({this.toggleView});
   @override
   _RegisterForm1State createState() => _RegisterForm1State();
 }
 
-class _RegisterForm1State extends State<RegisterForm1> {
-  // final AuthService _auth = AuthService();
+class _RegisterForm1State extends State<RegisterForm1>
+    with SingleTickerProviderStateMixin {
   final _formKey1 = GlobalKey<FormState>();
+  AnimationController _iconAnimationController;
+  Animation<double> _iconAnimation;
 
   String error = '';
   bool loading = false;
 
   void initState() {
+    _iconAnimationController = new AnimationController(
+        vsync: this, duration: new Duration(milliseconds: 1000));
+    _iconAnimation = new CurvedAnimation(
+        parent: _iconAnimationController, curve: Curves.easeInOut);
+    _iconAnimation.addListener(() => this.setState(() {}));
+    _iconAnimationController.forward();
     super.initState();
     setState(() {
       post = '';
@@ -34,124 +42,135 @@ class _RegisterForm1State extends State<RegisterForm1> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        backgroundColor: Colors.white,
         body: loading
             ? Loading()
             : SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: new Container(
-                    padding: EdgeInsets.only(top: 60.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 50,
+                    ),
                     child: Form(
                         key: _formKey1,
-                        child: ListView(shrinkWrap: true, children: <Widget>[
-                          new Divider(height: 35.0, color: Colors.transparent),
-                          Container(
-                            width: 20,
-                            height: 150,
-                            // decoration: new BoxDecoration(
-                            //     image: new DecorationImage(
-                            //         image: new AssetImage(
-                            //                 'assets/images/Protege_white_text.png')))
-                          ),
-                          new Divider(height: 55.0, color: Colors.transparent),
-                          new Text(
-                            'Hey,' + '\n' + 'register yourself as',
-                            style: TextStyle(
-                              fontFamily: 'GoogleSans',
-                              fontSize: 32,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          new Divider(height: 32.0, color: Colors.transparent),
-                          Column(children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  userMap['type'] = 'Hospital';
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        // builder: (context) => RegisterHosp(userMap)));
-                                        ));
-                              },
+                        child: Center(
+                          child: ListView(shrinkWrap: true, children: <Widget>[
+                            new Divider(
+                                height: 35.0, color: Colors.transparent),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 18.0),
                               child: Container(
-                                  // height: 40,
-                                  padding: EdgeInsets.symmetric(horizontal: 55),
-                                  child: Material(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.MediBlue,
-                                      child: Container(
-                                        height: 40,
-                                        alignment: Alignment.center,
-                                        child: Text('Hospital',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'GoogleSans'),
-                                            textAlign: TextAlign.center),
-                                      ))),
+                                  width: _iconAnimation.value * 265,
+                                  height: _iconAnimation.value * 250,
+                                  decoration: new BoxDecoration(
+                                      image: new DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: new AssetImage(
+                                              'assets/images/logo.png')))),
                             ),
-                            SizedBox(height: 10),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  userMap['post'] = 'Hospital';
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        // builder: (context) => Register(userMap))
-                                        ));
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 55),
-                                  child: Material(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.MediBlue,
-                                      child: Container(
-                                        height: 40,
-                                        alignment: Alignment.center,
-                                        child: Text('Mentee',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'GoogleSans'),
-                                            textAlign: TextAlign.center),
-                                      ))),
+                            new Divider(
+                                height: 35.0, color: Colors.transparent),
+                            new Text(
+                              'Register yourself as',
+                              style: kTitleTextstyle,
+                              textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 10.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text('Already registered? ',
-                                    style: TextStyle(
-                                      fontFamily: 'GoogleSans',
-                                      fontSize: 14.5,
-                                    )),
-                                SizedBox(height: 5.0),
-                                InkWell(
-                                  onTap: () {
-                                    widget.toggleView();
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.bottomCenter,
-                                    margin: EdgeInsets.symmetric(vertical: 12),
-                                    child: Text("Sign In Here",
+                            new Divider(
+                                height: 32.0, color: Colors.transparent),
+                            Column(children: <Widget>[
+                              Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                                  child: MaterialButton(
+                                    minWidth: double.infinity,
+                                    height: 48,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        userMap['type'] = 'Hospital';
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RegisterForm2()));
+                                    },
+                                    color: new Color(0xff0350C2),
+                                    child: Text('Hospital',
                                         style: TextStyle(
-                                            color: AppColors.MediBlue,
-                                            fontSize: 14.5,
-                                            fontFamily: 'GoogleSans',
-                                            decoration:
-                                                TextDecoration.underline)),
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'GoogleSans'),
+                                        textAlign: TextAlign.center),
+                                  )),
+                              SizedBox(height: 15),
+                              Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                                  child: MaterialButton(
+                                    minWidth: double.infinity,
+                                    height: 48,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        userMap['post'] = 'User';
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserRegister()));
+                                    },
+                                    color: new Color(0xff0350C2),
+                                    child: Text('User',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'GoogleSans'),
+                                        textAlign: TextAlign.center),
+                                  )),
+                              SizedBox(height: 10.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Already registered? ',
+                                      style: TextStyle(
+                                        color: const Color(0xFF959595),
+                                        fontFamily: 'GoogleSans',
+                                        fontSize: 14.5,
+                                      )),
+                                  SizedBox(height: 5.0),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserLogin()));
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.bottomCenter,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 12),
+                                      child: Text("Sign In Here",
+                                          style: TextStyle(
+                                              color: AppColors.mediBlue,
+                                              fontSize: 14.5,
+                                              fontFamily: 'GoogleSans',
+                                              decoration:
+                                                  TextDecoration.underline)),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ])
-                        ])))));
+                                ],
+                              )
+                            ])
+                          ]),
+                        )))));
   }
 }
