@@ -88,10 +88,87 @@ class Search extends StatelessWidget {
                             SizedBox(
                               height: 10,
                             ),
-                           
+                           Expanded(
+                                child: ListView.builder(
+                                    itemCount:
+                                        places != null ? places.length : 0,
+                                    itemBuilder: (context, index) {
+                                      return FutureProvider(
+                                        create: (context) =>
+                                            geoService.getDistance(
+                                                currentPosition.latitude,
+                                                places[index]
+                                                    .geometry
+                                                    .location
+                                                    .lat,
+                                                currentPosition.longitude,
+                                                places[index]
+                                                    .geometry
+                                                    .location
+                                                    .lng),
+                                        child: Card(
+                                            child: ListTile(
+                                          title: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 8.0, 0, 8),
+                                            child: Text(places[index].name,
+                                                style: kSubTextStyle),
+                                          ),
+                                          subtitle: Column(
+                                            children: [
+                                              (places[index].rating != null)
+                                                  ? Row(
+                                                      children: [
+                                                        RatingBarIndicator(
+                                                          rating: places[index]
+                                                              .rating,
+                                                          itemBuilder: (context,
+                                                                  index) =>
+                                                              Icon(Icons.star,
+                                                                  color: Colors
+                                                                      .amber),
+                                                          itemCount: 5,
+                                                          itemSize: 12,
+                                                          direction:
+                                                              Axis.horizontal,
+                                                        )
+                                                      ],
+                                                    )
+                                                  : Row(),
+                                              Consumer<double>(
+                                                builder:
+                                                    (context, meters, widget) {
+                                                  return (meters != null)
+                                                      ? Text(
+                                                          '${places[index].vicinity} : ${(meters / 1000).round()} kms')
+                                                      : Container();
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              )
+                                            ],
+                                          ),
+                                          trailing: IconButton(
+                                            icon: Icon(Icons.directions),
+                                            color: AppColors.mediBlue,
+                                            onPressed: () => _launchMapsUrl(
+                                                places[index]
+                                                    .geometry
+                                                    .location
+                                                    .lat,
+                                                places[index]
+                                                    .geometry
+                                                    .location
+                                                    .lng),
+                                          ),
+                                        )),
+                                      );
+                                    }))
                           ],
                         ),
-                      )
+                      ),
+              
                     : Center(
                         child: CircularProgressIndicator(),
                       );
