@@ -167,7 +167,7 @@ class Search extends StatelessWidget {
                                     }))
                           ],
                         ),
-                      ),
+                      )
               
                     : Center(
                         child: CircularProgressIndicator(),

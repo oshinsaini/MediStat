@@ -17,8 +17,7 @@ class RegisterForm1 extends StatefulWidget {
   _RegisterForm1State createState() => _RegisterForm1State();
 }
 
-class _RegisterForm1State extends State<RegisterForm1>
-    with SingleTickerProviderStateMixin {
+class _RegisterForm1State extends State<RegisterForm1> with SingleTickerProviderStateMixin {
   final _formKey1 = GlobalKey<FormState>();
   AnimationController _iconAnimationController;
   Animation<double> _iconAnimation;

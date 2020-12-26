@@ -1,4 +1,5 @@
 import 'package:dbapp/screens/authenticate/authenticate.dart';
+import 'package:dbapp/screens/vc/pickuplayout.dart';
 import 'package:dbapp/services/auth.dart';
 import 'package:dbapp/shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class _HospitalHomeState extends State<HospitalHome> {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
-    return Scaffold(
+    return PickupLayout(
+      scaffold: Scaffold(
           key: _scaffoldKey,
           drawer: _drawer,
           backgroundColor: Colors.white,
@@ -51,7 +53,7 @@ class _HospitalHomeState extends State<HospitalHome> {
                             fit: BoxFit.fill,
                             image: new AssetImage(
                                 'assets/images/hospithome.png')))),
-              ]),
+              ])),
     );
   }
 }

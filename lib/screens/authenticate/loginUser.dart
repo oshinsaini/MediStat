@@ -16,8 +16,7 @@ class UserLogin extends StatefulWidget {
   _UserLoginState createState() => _UserLoginState();
 }
 
-class _UserLoginState extends State<UserLogin>
-    with SingleTickerProviderStateMixin {
+class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMixin {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   AnimationController _iconAnimationController;
