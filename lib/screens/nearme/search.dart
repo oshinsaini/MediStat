@@ -1,7 +1,6 @@
 import 'package:dbapp/models/place.dart';
 import 'package:dbapp/services/geolocatorservice.dart';
 import 'package:dbapp/services/markerservice.dart';
-import 'package:dbapp/services/placeservice.dart';
 import 'package:dbapp/shared/drawer.dart';
 import 'package:dbapp/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,7 @@ class Search extends StatelessWidget {
                             SizedBox(
                               height: 10,
                             ),
-                           Expanded(
+                            Expanded(
                                 child: ListView.builder(
                                     itemCount:
                                         places != null ? places.length : 0,
@@ -168,7 +167,6 @@ class Search extends StatelessWidget {
                           ],
                         ),
                       )
-              
                     : Center(
                         child: CircularProgressIndicator(),
                       );

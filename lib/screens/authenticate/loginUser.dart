@@ -6,17 +6,15 @@ import 'package:dbapp/shared/colors.dart';
 import 'package:dbapp/shared/style.dart';
 import 'package:dbapp/shared/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/painting/box_border.dart';
 import '../home/home.dart';
 
 class UserLogin extends StatefulWidget {
-  // final Function toggleView;
-  // UserLogin({this.toggleView});
   @override
   _UserLoginState createState() => _UserLoginState();
 }
 
-class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMixin {
+class _UserLoginState extends State<UserLogin>
+    with SingleTickerProviderStateMixin {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   AnimationController _iconAnimationController;
@@ -222,54 +220,29 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
                                     ],
                                   ),
                                   onPressed: () async {
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    dynamic user = await _auth.googleSignIn();
+                                    if (user == null) {
+                                      setState(() {
+                                        error = 'couldnt sign up ';
+                                        loading = false;
+                                      });
+                                    } else {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Home(),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    }
                                   },
                                 ),
                               ),
-                              // Container(
-                              //   margin: EdgeInsets.symmetric(horizontal: 50),
-                              //   child: MaterialButton(
-                              //       minWidth: double.infinity,
-                              //       height: 48,
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(50.0),
-                              //       ),
-                              //       color: new Color(0xff0350C2),
-                              //       child: Row(
-                              //         children: [
-                              //           Icon(
-                              //             Icons.email,
-                              //             color: Colors.white,
-                              //           ),
-                              //           Text(
-                              //             ' Sign In With Google',
-                              //             style: TextStyle(
-                              //                 color: Colors.white,
-                              //                 fontSize: 15,
-                              //                 fontWeight: FontWeight.w600,
-                              //                 fontFamily: 'GoogleSans'),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       onPressed: () async {
-                              //         dynamic user = await _auth.googleSignIn();
-                              //         if (user == null) {
-                              //           setState(() {
-                              //             error = 'couldnt sign up ';
-                              //             loading = false;
-                              //           });
-                              //         } else {
-                              //           print("going from here");
-                              //           Navigator.pushAndRemoveUntil(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //               builder: (BuildContext context) =>
-                              //                   Home(),
-                              //             ),
-                              //             (route) => false,
-                              //           );
-                              //         }
-                              //       }),
-                              // ),
+                             
                               SizedBox(height: 10.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

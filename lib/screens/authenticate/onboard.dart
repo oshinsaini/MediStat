@@ -3,7 +3,6 @@ import 'package:dbapp/screens/authenticate/registerUser.dart';
 import 'package:dbapp/shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dbapp/shared/loading.dart';
-// ignore: unused_import
 import 'package:dbapp/screens/authenticate/registerHospital.dart';
 
 int visibleCard = 1;
@@ -17,7 +16,9 @@ class RegisterForm1 extends StatefulWidget {
   _RegisterForm1State createState() => _RegisterForm1State();
 }
 
-class _RegisterForm1State extends State<RegisterForm1> with SingleTickerProviderStateMixin {
+class _RegisterForm1State extends State<RegisterForm1>
+    with SingleTickerProviderStateMixin {
+  // final AuthService _auth = AuthService();
   final _formKey1 = GlobalKey<FormState>();
   AnimationController _iconAnimationController;
   Animation<double> _iconAnimation;
